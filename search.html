@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .search-input-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      font-size: 1rem;
+      color: #a07040;
+      pointer-events: none;
+    }
+    .search-input-wrap input {
+      padding-left: 38px;
+      padding-right: 44px;
+    }
+    .search-mic {
+      position: absolute;
+      right: 8px;
+      background: #e8e0d8;
+      border: none;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      font-size: 1rem;
+      color: #5a3e2b;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+    }
+    .search-mic:hover { background: #d4c9bc; }
+    .did-you-mean {
+      font-size: 0.95rem;
+      color: #2c1a0e;
+      font-weight: 500;
+    }
+    /* Banner shown in addMode */
+    .add-mode-banner {
+      background: #f5e8d4;
+      border: 2px solid #c4813a;
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 0.9rem;
+      color: #7b3a10;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <div style="display: flex; align-items: center; gap: 14px; padding-bottom: 12px; border-bottom: 3px solid #c4813a; margin-bottom: 4px;">
+    <button class="secondary" style="padding: 8px 14px;" onclick="handleBack()">&#8592;</button>
+    <div style="font-size: 1.4rem; font-weight: 700; color: #7b3a10;" id="pageHeader">Search</div>
+  </div>
+
+  <div id="addModeBanner" style="display:none;" class="add-mode-banner">
+    ＋ Tap a word to add it to your lesson
+  </div>
+
+  <div class="search-input-wrap">
+    <span class="search-icon">&#128269;</span>
+    <input id="searchInput" placeholder="Search..." oninput="handleSearch()">
+    <button class="search-mic" onclick="goTo('voice.html')" aria-label="Voice search">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.93V21h2v-2.07A7 7 0 0 0 19 12h-2z"/>
+      </svg>
+    </button>
+  </div>
+
+  <div id="didYouMean" style="display:none" class="did-you-mean">Did you mean..?</div>
+  <div id="results"></div>
+
+</div>
+
+<script src="app.js"></script>
+<script>
+  const catNames = {
+    everyday: "Everyday Phrases",
+    kinship:  "Kinship Terms",
+    emotions: "Emotions & Wellbeing",
+    nature:   "Nature & Land"
+  };
+
+  const params = new URLSearchParams(window.location.search);
+  const cat = params.get("cat");
+  const addMode = params.get("addMode") === "1";
+
+  // Show add mode banner
+  if (addMode) {
+    document.getElementById('addModeBanner').style.display = 'flex';
+  }
+
+  // Set header title
+  if (cat && catNames[cat]) {
+    document.getElementById("pageHeader").innerText = catNames[cat];
+    showCategory(cat);
+  }
+
+  function handleBack() {
+    if (addMode) {
+      goTo('dashboard.html');
+    } else {
+      history.back();
+    }
+  }
+
+  function showCategory(cat) {
+    const resultsDiv = document.getElementById("results");
+    resultsDiv.innerHTML = "";
+    Object.keys(words).forEach(key => {
+      if (words[key].category !== cat) return;
+      resultsDiv.appendChild(makeItem(key));
+    });
+  }
+
+  function handleSearch() {
+    const input = document.getElementById("searchInput").value.toLowerCase();
+    const resultsDiv = document.getElementById("results");
+    resultsDiv.innerHTML = "";
+    if (!input) {
+      if (cat) showCategory(cat);
+      return;
+    }
+    Object.keys(words).forEach(key => {
+      const w = words[key];
+      const matches = key.includes(input)
+        || w.title.toLowerCase().includes(input)
+        || w.sub.toLowerCase().includes(input);
+      if (matches && (!cat || w.category === cat)) {
+        resultsDiv.appendChild(makeItem(key));
+      }
+    });
+  }
+
+  function makeItem(key) {
+    const w = words[key];
+    const div = document.createElement("div");
+    div.className = "list-item";
+    div.innerHTML = `<strong>${w.title}</strong><br><span style="font-size:0.9rem;color:#a07040">${w.sub}</span>`;
+
+    div.onclick = () => {
+      if (addMode) {
+        // 1️⃣ Load current lesson words
+        let lessonWords = JSON.parse(localStorage.getItem('currentLessonWords') || '[]');
+
+        // 2️⃣ Define the forced sequence
+        const forcedSequence = ['mother', 'father', 'friend'];
+
+        // 3️⃣ Determine which word from the sequence is next
+        // This uses the current count of words to pick the next index
+        let wordToAdd = null;
+
+        if (lessonWords.length < forcedSequence.length) {
+          // Pick the next word in the sequence
+          wordToAdd = forcedSequence[lessonWords.length];
+        } else {
+          // 4️⃣ Fallback: Sequence is finished, add the word they actually clicked
+          wordToAdd = key;
+        }
+
+        // 5️⃣ Add the word if it's not a duplicate
+        if (wordToAdd && !lessonWords.includes(wordToAdd)) {
+          lessonWords.push(wordToAdd);
+          
+          // 6️⃣ Save updated lesson words
+          localStorage.setItem('currentLessonWords', JSON.stringify(lessonWords));
+        }
+
+        // 7️⃣ Navigate to dashboard
+        window.location.href = 'dashboard.html';
+
+      } else {
+        // Normal dictionary behavior
+        localStorage.setItem("selectedWord", key);
+        goTo("definition.html");
+      }
+    };
+      return div;
+    }
+
+</script>
+</body>
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>nitôtêm – Definition</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* ── Definition page ── */
+    .def-container {
+      max-width: 420px;
+      margin: 0 auto;
+      padding: 28px 24px 64px;
+    }
+
+    /* Back arrow */
+    .back-btn {
+      font-size: 1.4rem;
+      color: #7b3a10;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      margin-bottom: 28px;
+      line-height: 1;
+      display: block;
+    }
+    .back-btn:hover { color: #a0621e; }
+
+    /* Word heading */
+    .def-word {
+      font-size: 2.6rem;
+      font-weight: 800;
+      text-align: center;
+      color: #2c1a0e;
+      line-height: 1.15;
+    }
+
+    .def-gloss {
+      font-size: 1rem;
+      text-align: center;
+      color: #a07040;
+      margin-top: 6px;
+      margin-bottom: 32px;
+    }
+
+    /* Dividers */
+    .def-divider {
+      border: none;
+      border-top: 1px solid #d4a96a;
+      margin: 20px 0;
+    }
+
+    /* Section label */
+    .section-label {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #2c1a0e;
+      margin-bottom: 6px;
+    }
+
+    .section-text {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: #2c1a0e;
+    }
+
+    /* ── Related words tree ── */
+    .tree-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 14px;
+    }
+
+    .tree-root {
+      background: #f5e8d4;
+      border: 1px solid #c4813a;
+      border-radius: 6px;
+      padding: 8px 24px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #7b3a10;
+    }
+
+    .tree-lines {
+      width: 100%;
+      height: 54px;
+      overflow: visible;
+    }
+
+    .tree-children {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      gap: 8px;
+    }
+
+    .tree-child {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      flex: 1;
+    }
+
+    .tree-child-box {
+      background: #f5e8d4;
+      border: 1px solid #c4813a;
+      border-radius: 6px;
+      padding: 7px 6px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #7b3a10;
+      text-align: center;
+      width: 100%;
+      cursor: pointer;
+      transition: background 0.18s;
+    }
+    .tree-child-box:hover { background: #edd9b4; }
+
+    .tree-child-gloss {
+      font-size: 0.82rem;
+      color: #a07040;
+      text-align: center;
+    }
+
+    /* ── Usage grid ── */
+    .usage-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .usage-cell {
+      background: #f5e8d4;
+      border-radius: 8px;
+      padding: 12px 10px;
+      font-size: 0.82rem;
+      line-height: 1.6;
+      color: #2c1a0e;
+    }
+
+    .usage-cell em {
+      color: #a07040;
+      font-style: normal;
+    }
+  </style>
+</head>
+<body>
+  <div class="def-container">
+
+    <!-- Back button -->
+    <button class="back-btn" onclick="history.back()" aria-label="Go back">&#8592;</button>
+
+    <!-- Word & gloss -->
+    <div class="def-word" id="defWord"></div>
+    <div class="def-gloss" id="defGloss"></div>
+
+    <hr class="def-divider" />
+
+    <!-- Meaning -->
+    <div class="section-label">Meaning</div>
+    <div class="section-text" id="defMeaning"></div>
+
+    <hr class="def-divider" />
+
+    <!-- Related words tree -->
+    <div class="section-label">Related words</div>
+
+    <div class="tree-wrapper">
+      <div class="tree-root" id="treeRoot"></div>
+
+      <svg class="tree-lines" viewBox="0 0 340 54" preserveAspectRatio="none">
+        <line x1="170" y1="0" x2="57"  y2="54" stroke="#c4813a" stroke-width="1.5"/>
+        <line x1="170" y1="0" x2="170" y2="54" stroke="#c4813a" stroke-width="1.5"/>
+        <line x1="170" y1="0" x2="283" y2="54" stroke="#c4813a" stroke-width="1.5"/>
+      </svg>
+
+      <div class="tree-children">
+        <div class="tree-child">
+          <div class="tree-child-box" id="child0"></div>
+          <div class="tree-child-gloss" id="childGloss0"></div>
+        </div>
+        <div class="tree-child">
+          <div class="tree-child-box" id="child1"></div>
+          <div class="tree-child-gloss" id="childGloss1"></div>
+        </div>
+        <div class="tree-child">
+          <div class="tree-child-box" id="child2"></div>
+          <div class="tree-child-gloss" id="childGloss2"></div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="def-divider" />
+
+    <!-- How it can be used -->
+    <div class="section-label">How it can be used</div>
+
+    <div class="usage-grid">
+      <div class="usage-cell" id="usage0"></div>
+      <div class="usage-cell" id="usage1"></div>
+      <div class="usage-cell" id="usage2"></div>
+      <div class="usage-cell" id="usage3"></div>
+    </div>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

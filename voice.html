@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Voice Search</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    .voice-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 36px;
+      padding: 40px 24px;
+      max-width: 420px;
+      width: 100%;
+    }
+    .waveform {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      height: 80px;
+    }
+    .waveform .bar {
+      width: 5px;
+      border-radius: 3px;
+      background: #2c1a0e;
+      animation: wave 1s ease-in-out infinite;
+    }
+    .bar:nth-child(1)  { height: 18px; animation-delay: 0.00s; }
+    .bar:nth-child(2)  { height: 35px; animation-delay: 0.10s; }
+    .bar:nth-child(3)  { height: 55px; animation-delay: 0.20s; }
+    .bar:nth-child(4)  { height: 70px; animation-delay: 0.30s; }
+    .bar:nth-child(5)  { height: 50px; animation-delay: 0.40s; }
+    .bar:nth-child(6)  { height: 75px; animation-delay: 0.15s; }
+    .bar:nth-child(7)  { height: 80px; animation-delay: 0.25s; }
+    .bar:nth-child(8)  { height: 65px; animation-delay: 0.35s; }
+    .bar:nth-child(9)  { height: 50px; animation-delay: 0.05s; }
+    .bar:nth-child(10) { height: 70px; animation-delay: 0.45s; }
+    .bar:nth-child(11) { height: 80px; animation-delay: 0.20s; }
+    .bar:nth-child(12) { height: 55px; animation-delay: 0.10s; }
+    .bar:nth-child(13) { height: 35px; animation-delay: 0.30s; }
+    .bar:nth-child(14) { height: 18px; animation-delay: 0.00s; }
+    @keyframes wave {
+      0%, 100% { transform: scaleY(0.35); opacity: 0.5; }
+      50%       { transform: scaleY(1);    opacity: 1;   }
+    }
+    .voice-label {
+      font-size: 1.6rem;
+      color: #2c1a0e;
+      font-weight: 400;
+    }
+    .voice-cancel {
+      background: none;
+      color: #7b3a10;
+      border: 2px solid #c4813a;
+      border-radius: 24px;
+      padding: 10px 32px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.18s;
+    }
+    .voice-cancel:hover { background: #f5e8d4; }
+  </style>
+</head>
+<body>
+  <div class="voice-container">
+    <div class="waveform">
+      <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+      <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+      <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+      <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+      <div class="bar"></div><div class="bar"></div>
+    </div>
+    <div class="voice-label">Listening ...</div>
+    <button class="voice-cancel" onclick="history.back()">Cancel</button>
+  </div>
+  <script>
+    // Hardcoded prototype: after 2.5s navigate to search with voice results
+    setTimeout(function() {
+      window.location.href = "search.html?voice=1";
+    }, 2500);
+  </script>
+</body>
+</html>

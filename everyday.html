@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Everyday Phrases</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .page-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .back-btn {
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      color: #2c1a0e;
+      cursor: pointer;
+      padding: 0;
+      line-height: 1;
+    }
+
+    .page-title {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #2c1a0e;
+    }
+
+    .phrase-card {
+      background: #ddd4cb;
+      border-radius: 14px;
+      padding: 18px 16px;
+      margin-bottom: 18px;
+      cursor: pointer;
+      transition: background 0.18s, transform 0.1s;
+    }
+
+    .phrase-card:hover {
+      background: #d3c9bf;
+    }
+
+    .phrase-card:active {
+      transform: scale(0.98);
+    }
+
+    .phrase-card-title {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: #2c1a0e;
+    }
+
+    .phrase-card-text {
+      font-size: 0.95rem;
+      color: #4b3a2d;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <div class="page-top">
+    <button class="back-btn" onclick="history.back()" aria-label="Go back">&#8592;</button>
+    <div class="page-title">Everyday Phrases</div>
+  </div>
+
+  <div class="phrase-card" onclick="goTo('everyday-words.html')">
+    <div class="phrase-card-title">Start here</div>
+    <div class="phrase-card-text">
+      tânisi - Hello<br>
+      êkosi - So, Thus<br>
+      namôya - No, Not so
+    </div>
+  </div>
+
+  <div class="phrase-card" onclick="goTo('search.html?cat=everyday')">
+    <div class="phrase-card-title">More to explore</div>
+    <div class="phrase-card-text">
+      tânisi kikosi - How is your son?<br>
+      ninohtê mîna - I want to eat<br>
+      kîsta - You too
+    </div>
+  </div>
+
+  <div class="phrase-card" onclick="goTo('search.html?cat=everyday')">
+    <div class="phrase-card-title">Challenge yourself</div>
+    <div class="phrase-card-text">
+      Wâskahikan kayâs-âyiwan - The house is old<br>
+      Kithwâm kî wâpamitin - See you again
+    </div>
+  </div>
+
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Everyday Phrases</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .page-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .back-btn {
+      background: none !important;
+      border: none !important;
+      font-size: 1.4rem;
+      color: #2c1a0e !important;
+      cursor: pointer;
+      padding: 0 !important;
+      line-height: 1;
+    }
+
+    .page-title {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #2c1a0e;
+    }
+
+    .word-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 18px 0;
+      border-bottom: 1px solid #d8c6ae;
+    }
+
+    .word-main {
+      flex: 1;
+      cursor: pointer;
+    }
+
+    .word-main:hover {
+      opacity: 0.9;
+    }
+
+    .word-cree {
+      font-size: 2rem;
+      font-weight: 500;
+      color: #2c1a0e;
+      line-height: 1.2;
+    }
+
+    .word-sub {
+      font-size: 1rem;
+      color: #4b3a2d;
+      margin-top: 6px;
+      line-height: 1.4;
+    }
+
+    .audio-btn {
+      width: 42px !important;
+      height: 42px !important;
+      min-width: 42px !important;
+      min-height: 42px !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      border-radius: 50% !important;
+      border: 1px solid #d8c6ae !important;
+      background: #efe6dc !important;
+      color: #2c1a0e !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      cursor: pointer;
+      flex-shrink: 0;
+      box-shadow: none !important;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    .audio-btn:hover {
+      background: #e2d4c5 !important;
+    }
+
+    .audio-btn:active {
+      transform: scale(0.96);
+    }
+
+    .audio-btn svg {
+      width: 18px;
+      height: 18px;
+      display: block;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <div class="page-top">
+    <button class="back-btn" onclick="history.back()" aria-label="Go back">&#8592;</button>
+    <div class="page-title">Everyday Phrases</div>
+  </div>
+
+  <div id="wordList"></div>
+
+</div>
+
+<script src="app.js"></script>
+<script>
+  const everydayWords = [
+    { key: "hello",   title: "tânisi",  sub: "Hello / how are you" },
+    { key: "ekosi",   title: "êkosi",   sub: "So, Thus" },
+    { key: "namoya",  title: "namôya",  sub: "No, Not so" },
+    { key: "anohc",   title: "anohc",   sub: "Today" },
+    { key: "wapahki", title: "wâpahki", sub: "Tomorrow" }
+  ];
+
+  const wordList = document.getElementById("wordList");
+
+  function openWordFromCategory(item) {
+    if (typeof words !== "undefined" && words[item.key]) {
+      localStorage.setItem("selectedWord", item.key);
+      goTo("definition.html");
+    } else {
+      alert(item.title + " definition is not connected yet.");
+    }
+  }
+  
+//added for checking if the sounds play or not
+  function playAudio(word) {
+    alert("Prototype audio for: " + word);
+  }
+
+  everydayWords.forEach(function(item) {
+    const row = document.createElement("div");
+    row.className = "word-row";
+
+    row.innerHTML =
+      '<div class="word-main">' +
+        '<div class="word-cree">' + item.title + '</div>' +
+        '<div class="word-sub">' + item.sub + '</div>' +
+      '</div>' +
+      '<button class="audio-btn" type="button" aria-label="Play audio">' +
+        '<svg viewBox="0 0 24 24" aria-hidden="true">' +
+          '<path d="M11 5 L6 9 H3 V15 H6 L11 19 Z"></path>' +
+          '<path d="M15 9 Q18 12 15 15"></path>' +
+          '<path d="M17.5 7 Q22 12 17.5 17"></path>' +
+        '</svg>' +
+      '</button>';
+
+    row.querySelector(".word-main").onclick = function() {
+      openWordFromCategory(item);
+    };
+
+    row.querySelector(".audio-btn").onclick = function(e) {
+      e.stopPropagation();
+      playAudio(item.title);
+    };
+
+    wordList.appendChild(row);
+  });
+</script>
+</body>
+</html>

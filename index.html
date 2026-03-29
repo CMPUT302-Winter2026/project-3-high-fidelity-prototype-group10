@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    .login-wrap {
+      width: 100%;
+      max-width: 420px;
+      padding: 0 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .login-brand {
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    .login-brand img {
+      width: 90px;
+      height: 90px;
+      object-fit: contain;
+      margin-bottom: 4px;
+    }
+    .login-brand h1 {
+      font-size: 1.9rem;
+      font-weight: 800;
+      color: #7b3a10;
+      letter-spacing: 0.01em;
+    }
+    .login-brand p {
+      font-size: 0.95rem;
+      color: #a07040;
+      margin-top: 4px;
+    }
+    .login-btns {
+      display: flex;
+      gap: 12px;
+      margin-top: 8px;
+    }
+    .login-btns button { flex: 1; }
+    button:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+      transform: none;
+    }
+  </style>
+</head>
+<body>
+<div class="login-wrap">
+  <div class="login-brand">
+    <img src="logo.svg" alt="Polar bear logo">
+    <h1>nēhiyawēwin</h1>
+    <p>Cree Vocabulary Explorer</p>
+  </div>
+  <input id="username" placeholder="Username">
+  <input id="password" type="password" placeholder="Password">
+  <div class="login-btns">
+    <button id="btnStudent" onclick="doLogin(this, 'Student')">Login as Student</button>
+    <button id="btnEducator" class="secondary" onclick="doLogin(this, 'Educator')">Login as Educator</button>
+  </div>
+</div>
+<script src="app.js"></script>
+<script>
+  function doLogin(btn, role) {
+    localStorage.setItem('userRole', role.toLowerCase());
+    var btns = document.querySelectorAll('.login-btns button');
+    btns.forEach(function(b) { b.disabled = true; });
+    btn.textContent = 'Signing in…';
+    setTimeout(function() { goTo('home.html'); }, 1200);
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Lessons</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .top-bar {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding-bottom: 12px;
+      border-bottom: 3px solid #c4813a;
+      margin-bottom: 4px;
+    }
+    .top-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #7b3a10;
+    }
+    .lesson-card {
+      background: #fff;
+      border-radius: 14px;
+      padding: 18px 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      cursor: pointer;
+      transition: box-shadow 0.18s;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .lesson-card:hover {
+      box-shadow: 0 4px 16px rgba(0,0,0,0.13);
+    }
+    .lesson-card-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #2c1a0e;
+    }
+    .lesson-card-meta {
+      font-size: 0.85rem;
+      color: #a07040;
+    }
+    .lesson-card-words {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+    }
+    .lesson-word-chip {
+      background: #f5e8d4;
+      border: 1.5px solid #d4a96a;
+      color: #7b3a10;
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-size: 0.82rem;
+      font-weight: 500;
+    }
+    .empty-state {
+      text-align: center;
+      padding: 48px 20px;
+      color: #a07040;
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+    .empty-state strong {
+      display: block;
+      font-size: 1.1rem;
+      color: #7b3a10;
+      margin-bottom: 6px;
+    }
+ 
+    /* Lesson detail view */
+    .lesson-detail {
+      display: none;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .lesson-detail.open {
+      display: flex;
+    }
+    .lesson-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .lesson-list.hidden { display: none; }
+ 
+    .detail-word-node {
+      background: #fff;
+      border: 2px solid #c4813a;
+      border-radius: 10px;
+      padding: 14px 18px;
+      cursor: pointer;
+      transition: background 0.18s, box-shadow 0.18s;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    }
+    .detail-word-node:hover {
+      background: #fffaf4;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.11);
+    }
+    .detail-word-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #7b3a10;
+    }
+    .detail-word-sub {
+      font-size: 0.88rem;
+      color: #a07040;
+      margin-top: 2px;
+    }
+    .detail-connector {
+      width: 2px;
+      height: 24px;
+      background: #c4813a;
+      align-self: center;
+    }
+    .detail-tree {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+ 
+  <!-- Lessons list view -->
+  <div id="listView">
+    <div class="top-bar">
+      <button class="secondary" style="padding: 8px 14px;" onclick="goTo('home.html')">&#8592;</button>
+      <span class="top-title">My Lessons</span>
+    </div>
+    <div id="lessonList" class="lesson-list"></div>
+  </div>
+ 
+  <!-- Lesson detail view -->
+  <div id="detailView" class="lesson-detail">
+    <div class="top-bar">
+      <button class="secondary" style="padding: 8px 14px;" onclick="showList()">&#8592;</button>
+      <span class="top-title" id="detailTitle"></span>
+    </div>
+    <div class="section-label">Words</div>
+    <div class="detail-tree" id="detailTree"></div>
+  </div>
+ 
+</div>
+ 
+<script src="app.js"></script>
+<script>
+  function showList() {
+    document.getElementById('listView').style.display = 'block';
+    document.getElementById('detailView').classList.remove('open');
+  }
+ 
+  function showDetail(lesson) {
+    document.getElementById('listView').style.display = 'none';
+    document.getElementById('detailTitle').textContent = lesson.title;
+ 
+    const tree = document.getElementById('detailTree');
+    tree.innerHTML = '';
+ 
+    lesson.words.forEach((key, i) => {
+      const w = words[key];
+      if (!w) return;
+ 
+      if (i > 0) {
+        const line = document.createElement('div');
+        line.className = 'detail-connector';
+        tree.appendChild(line);
+      }
+ 
+      const node = document.createElement('div');
+      node.className = 'detail-word-node';
+      node.innerHTML = `
+        <div class="detail-word-title">${w.title}</div>
+        <div class="detail-word-sub">${w.sub}</div>
+      `;
+      node.onclick = () => {
+        localStorage.setItem('selectedWord', key);
+        goTo('definition.html');
+      };
+      tree.appendChild(node);
+    });
+ 
+    document.getElementById('detailView').classList.add('open');
+  }
+ 
+  function renderLessons() {
+    const lessons = JSON.parse(localStorage.getItem('savedLessons') || '[]');
+    const container = document.getElementById('lessonList');
+    container.innerHTML = '';
+ 
+    if (lessons.length === 0) {
+      container.innerHTML = `
+        <div class="empty-state">
+          <strong>No lessons yet</strong>
+          Your teacher hasn't shared any lessons yet.<br>Check back soon!
+        </div>`;
+      return;
+    }
+ 
+    // Show newest first
+    [...lessons].reverse().forEach((lesson, i) => {
+      const card = document.createElement('div');
+      card.className = 'lesson-card';
+ 
+      const wordChips = lesson.words.map(key => {
+        const w = words[key];
+        return w ? `<span class="lesson-word-chip">${w.title}</span>` : '';
+      }).join('');
+ 
+      card.innerHTML = `
+        <div class="lesson-card-title">${lesson.title}</div>
+        <div class="lesson-card-meta">${lesson.words.length} word${lesson.words.length !== 1 ? 's' : ''} · ${lesson.date}</div>
+        <div class="lesson-card-words">${wordChips}</div>
+      `;
+      card.onclick = () => showDetail(lesson);
+      container.appendChild(card);
+    });
+  }
+ 
+  renderLessons();
+</script>
+</body>
+</html>
