@@ -206,8 +206,42 @@
       <div class="usage-cell" id="usage3"></div>
     </div>
 
+    <div id="addToLessonWrap" style="display:none; margin-top: 28px;">
+      <button onclick="addCurrentWordToLesson()" style="width:100%; padding:16px; background:#7b3a10; color:#fff; border:none; border-radius:12px; font-size:1rem; font-weight:600; cursor:pointer; transition:background 0.18s;" onmouseover="this.style.background='#a0621e'" onmouseout="this.style.background='#7b3a10'">Add to Lesson</button>
+    </div>
+
   </div>
 
   <script src="app.js"></script>
+  <script>
+    (function() {
+      const role = localStorage.getItem('userRole') || 'student';
+      
+      // Check the URL to see if we arrived here from an add mode search
+      const params = new URLSearchParams(window.location.search);
+      const isAddMode = params.get("addMode") === "1";
+
+      // Only show the button if they are an educator AND they are in add mode
+      if (role === 'educator' && isAddMode) {
+        var wrap = document.getElementById('addToLessonWrap');
+        if (wrap) wrap.style.display = 'block';
+      }
+      })();
+
+    function addCurrentWordToLesson() {
+      const wordKey = localStorage.getItem('selectedWord');
+      if (wordKey) {
+        let lessonWords = JSON.parse(localStorage.getItem('currentLessonWords') || '[]');
+        
+        // Add word if it's not already in the array
+        if (!lessonWords.includes(wordKey)) {
+          lessonWords.push(wordKey);
+          localStorage.setItem('currentLessonWords', JSON.stringify(lessonWords));
+        }
+      }
+      // Send the user back to the search page they just came from
+      history.back();
+    }
+  </script>
 </body>
 </html>

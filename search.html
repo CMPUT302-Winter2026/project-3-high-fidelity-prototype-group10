@@ -55,7 +55,36 @@
       font-weight: 600;
       display: flex;
       align-items: center;
+      justify-content: space-between;
       gap: 8px;
+    }
+    .add-mode-done {
+      background: #7b3a10;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 6px 16px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .add-mode-done:hover { background: #a0621e; }
+    .add-plus-btn {
+      margin-left: auto;
+      flex-shrink: 0;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 2px solid #c4813a;
+      background: #fff;
+      color: #c4813a;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+
     }
   </style>
 </head>
@@ -68,7 +97,8 @@
   </div>
 
   <div id="addModeBanner" style="display:none;" class="add-mode-banner">
-    ＋ Tap a word to add it to your lesson
+    <span>Tap the + to quick add a word to the lesson</span>
+    <button class="add-mode-done" onclick="finishAdding()">Done</button>
   </div>
 
   <div class="search-input-wrap">
@@ -146,52 +176,81 @@
     });
   }
 
+  // Track selected words for multi-select in addMode
+  const selectedWords = new Set(
+    JSON.parse(localStorage.getItem('currentLessonWords') || '[]')
+  );
+
+  function finishAdding() {
+    window.location.href = 'dashboard.html';
+  }
+
   function makeItem(key) {
     const w = words[key];
     const div = document.createElement("div");
     div.className = "list-item";
-    div.innerHTML = `<strong>${w.title}</strong><br><span style="font-size:0.9rem;color:#a07040">${w.sub}</span>`;
+    div.style.display = "flex";
+    div.style.alignItems = "center";
+    div.innerHTML = `<div><strong>${w.title}</strong><br><span style="font-size:0.9rem;color:#a07040">${w.sub}</span></div>`;
 
-    div.onclick = () => {
-      if (addMode) {
-        // 1️⃣ Load current lesson words
-        let lessonWords = JSON.parse(localStorage.getItem('currentLessonWords') || '[]');
+    if (addMode) {
+      const plusIcon = document.createElement("button");
+      plusIcon.className = "add-plus-btn";
+      
+      // 1. Read fresh from localStorage when the item is rendered
+      let currentLesson = JSON.parse(localStorage.getItem('currentLessonWords') || '[]');
+      let isChosen = currentLesson.includes(key);
 
-        // 2️⃣ Define the forced sequence
-        const forcedSequence = ['mother', 'father', 'friend'];
-
-        // 3️⃣ Determine which word from the sequence is next
-        // This uses the current count of words to pick the next index
-        let wordToAdd = null;
-
-        if (lessonWords.length < forcedSequence.length) {
-          // Pick the next word in the sequence
-          wordToAdd = forcedSequence[lessonWords.length];
-        } else {
-          // 4️⃣ Fallback: Sequence is finished, add the word they actually clicked
-          wordToAdd = key;
-        }
-
-        // 5️⃣ Add the word if it's not a duplicate
-        if (wordToAdd && !lessonWords.includes(wordToAdd)) {
-          lessonWords.push(wordToAdd);
-          
-          // 6️⃣ Save updated lesson words
-          localStorage.setItem('currentLessonWords', JSON.stringify(lessonWords));
-        }
-
-        // 7️⃣ Navigate to dashboard
-        window.location.href = 'dashboard.html';
-
+      if (isChosen) {
+        plusIcon.innerHTML = "&#10003;"; // Checkmark
+        plusIcon.style.background = "#c4813a";
+        plusIcon.style.color = "#fff";
       } else {
-        // Normal dictionary behavior
-        localStorage.setItem("selectedWord", key);
-        goTo("definition.html");
-      }
-    };
-      return div;
+        plusIcon.innerHTML = "+"; // Plus
+        plusIcon.style.background = "#fff";
+        plusIcon.style.color = "#c4813a";
+          }
+
+    plusIcon.onclick = (e) => {
+        e.stopPropagation(); 
+        
+        // Re-fetch to guarantee we have the absolute latest list
+        let freshLesson = JSON.parse(localStorage.getItem('currentLessonWords') || '[]');
+        const alreadyInLesson = freshLesson.includes(key);
+
+        if (alreadyInLesson) {
+          // Remove it
+          freshLesson = freshLesson.filter(k => k !== key); 
+          plusIcon.innerHTML = "+";
+          plusIcon.style.background = "#fff";
+          plusIcon.style.color = "#c4813a";
+        } else {
+          // Add it
+          freshLesson.push(key); 
+          plusIcon.innerHTML = "&#10003;";
+          plusIcon.style.background = "#c4813a";
+          plusIcon.style.color = "#fff";
+        }
+        
+        // Save back to localStorage immediately
+        localStorage.setItem('currentLessonWords', JSON.stringify(freshLesson));
+      };
+      
+      div.appendChild(plusIcon);
     }
 
+      div.onclick = () => {
+        localStorage.setItem("selectedWord", key);
+        // Pass the addMode flag in the URL if we are currently in add mode
+        if (addMode) {
+          goTo("definition.html?addMode=1");
+        } else {
+        goTo("definition.html");
+        }
+     };
+     return div;
+  }
+  
 </script>
 </body>
 </html>

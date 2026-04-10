@@ -71,12 +71,30 @@
 <script src="app.js"></script>
 <script>
   function doLogin(btn, role) {
-    localStorage.setItem('userRole', role.toLowerCase());
+    // 1. Debugging: This will tell you exactly what the button sent to the function
+    console.log("Login attempt for role:", role);
+
+    // 2. Force the update to localStorage
+    localStorage.setItem('', role.toLowerCase());
+
+    // 3. Update 'addMode' based on the role 
+    // Educators get 'true', Students get 'false'
+    if (role.toLowerCase() === 'educator') {
+        localStorage.setItem('addMode', 'true');
+    } else {
+        localStorage.setItem('addMode', 'false');
+    }
+
+    // 4. UI Feedback
     var btns = document.querySelectorAll('.login-btns button');
     btns.forEach(function(b) { b.disabled = true; });
-    btn.textContent = 'Signing in…';
-    setTimeout(function() { goTo('home.html'); }, 1200);
-  }
+    btn.textContent = 'Signing in as ' + role + '...';
+
+    // 5. Short delay before moving to the next page
+    setTimeout(function() { 
+        window.location.href = 'home.html'; 
+    }, 1000);
+}
 </script>
 </body>
 </html>

@@ -29,6 +29,19 @@
       font-weight: 700;
       color: #7b3a10;
     }
+    .top-bar-action {
+      width: 100%;
+      padding: 14px;
+      background: #7b3a10;
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.18s;
+    }
+    .top-bar-action:hover { background: #a0621e; }
     .explore-card {
       background: #fff;
       border-radius: 14px;
@@ -101,6 +114,9 @@
     <button class="mic-btn" onclick="goTo('voice.html')" aria-label="Voice search"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.93V21h2v-2.07A7 7 0 0 0 19 12h-2z"/></svg></button>
   </div>
 
+  <button id="btnCreateLesson" class="top-bar-action educator-only" onclick="goTo('dashboard.html')" style="display:none; width:100%;">Create Lesson</button>
+  <button id="btnViewLessons" class="top-bar-action student-only" onclick="goTo('my-lessons.html')" style="display:none; width:100%;">My Lessons</button>
+
   <div class="explore-card" onclick="goTo('search.html')">
     <strong>Explore Relationships</strong>
     <p>walk &nbsp;&mdash;&mdash;&nbsp; run &nbsp;&mdash;&mdash;&nbsp; travel</p>
@@ -119,11 +135,7 @@
 
   <div id="recentList"></div>
 
-  <div style="height: 40px;"></div> 
-  <div> 
-    <button id="btnCreateLesson" class="educator-only" style="width: 100%; margin-top: auto; padding: 16px;" onclick="goTo('dashboard.html')">Create Lesson</button>
-    <button id="btnViewLessons" class="student-only" style="width: 100%; margin-top: auto; padding: 16px;" onclick="goTo('my-lessons.html')">View my Lessons</button>
-  </div>  
+  <div style="height: 24px;"></div>
 
 </div>
 
