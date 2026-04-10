@@ -28,9 +28,9 @@ const words = {
     meaning: 'A general greeting meaning \'hello\' or \'how are you\'.',
     category: 'everyday',
     related: [
-      {cree: 'tânisi kiya?', gloss: 'how are you?'},
-      {cree: 'namôya nântaw', gloss: 'I\'m fine'},
-      {cree: 'êkosi', gloss: 'okay / that\'s it'}
+      {cree: 'tânisi kiya?', gloss: 'how are you?', relation: 'extended phrase'},
+      {cree: 'namôya nântaw', gloss: 'I\'m fine', relation: 'common response'},
+      {cree: 'êkosi', gloss: 'okay / that\'s it', relation: 'often paired'}
     ],
     usage: [
       {cree: 'tânisi!', eng: '"Hello!"'},
@@ -46,9 +46,9 @@ const words = {
         'An expression of gratitude, borrowed into Cree from French \'merci\'.',
     category: 'everyday',
     related: [
-      {cree: 'marsî mâka', gloss: 'thank you very much'},
-      {cree: 'tânisi', gloss: 'hello'},
-      {cree: 'êkosi', gloss: 'okay / that\'s it'}
+      {cree: 'marsî mâka', gloss: 'thank you very much', relation: 'stronger form'},
+      {cree: 'tânisi', gloss: 'hello', relation: 'often paired'},
+      {cree: 'êkosi', gloss: 'okay / that\'s it', relation: 'often paired'}
     ],
     usage: [
       {cree: 'marsî!', eng: '"Thank you!"'},
@@ -63,8 +63,9 @@ const words = {
     meaning: 'An affirmative response meaning \'yes\'.',
     category: 'everyday',
     related: [
-      {cree: 'namôya', gloss: 'no'}, {cree: 'êkosi', gloss: 'okay'},
-      {cree: 'mâka', gloss: 'but / indeed'}
+      {cree: 'namôya', gloss: 'no', relation: 'opposite'},
+      {cree: 'êkosi', gloss: 'okay', relation: 'often paired'},
+      {cree: 'mâka', gloss: 'but / indeed', relation: 'often paired'}
     ],
     usage: [
       {cree: 'âha!', eng: '"Yes!"'}, {cree: 'namôya.', eng: '"No."'},
@@ -78,9 +79,9 @@ const words = {
     meaning: 'A command meaning \'come here\' or \'come\'.',
     category: 'everyday',
     related: [
-      {cree: 'pêhtaw', gloss: 'listen'},
-      {cree: 'wâpahtam', gloss: 'look at it'},
-      {cree: 'itohtê', gloss: 'go there'}
+      {cree: 'pêhtaw', gloss: 'listen', relation: 'similar command'},
+      {cree: 'wâpahtam', gloss: 'look at it', relation: 'similar command'},
+      {cree: 'itohtê', gloss: 'go there', relation: 'similar command'}
     ],
     usage: [
       {cree: 'astam!', eng: '"Come here!"'},
@@ -97,9 +98,9 @@ const words = {
         'A close friend or kinship companion; someone you consider your own friend or relative.',
     category: 'kinship',
     related: [
-      {cree: 'kitôtêm', gloss: 'your friend'},
-      {cree: 'otôtêma', gloss: 'his/her friend'},
-      {cree: 'wîcêwâkan', gloss: 'companion'}
+      {cree: 'kitôtêm', gloss: 'your friend', relation: 'your form'},
+      {cree: 'otôtêma', gloss: 'his/her friend', relation: 'his/her form'},
+      {cree: 'wîcêwâkan', gloss: 'companion', relation: 'synonym'}
     ],
     usage: [
       {cree: 'nitôtêm, astam!', eng: '"My friend, come here!"'},
@@ -115,9 +116,9 @@ const words = {
         'The word for \'my mother\'; kinship terms in Cree are always possessed.',
     category: 'kinship',
     related: [
-      {cree: 'nôhkom', gloss: 'my grandmother'},
-      {cree: 'nistês', gloss: 'my older brother'},
-      {cree: 'nimis', gloss: 'my older sister'}
+      {cree: 'nôhkom', gloss: 'my grandmother', relation: 'female elder'},
+      {cree: 'nistês', gloss: 'my older brother', relation: 'male sibling'},
+      {cree: 'nimis', gloss: 'my older sister', relation: 'female sibling'}
     ],
     usage: [
       {cree: 'nikâwiy pimihâw.', eng: '"My mother is flying (travelling)."'},
@@ -132,9 +133,9 @@ const words = {
     meaning: 'The word for \'my father\'; possessed kinship term.',
     category: 'kinship',
     related: [
-      {cree: 'nimosôm', gloss: 'my grandfather'},
-      {cree: 'nisîmis', gloss: 'my younger sibling'},
-      {cree: 'nikâwiy', gloss: 'my mother'}
+      {cree: 'nimosôm', gloss: 'my grandfather', relation: 'male elder'},
+      {cree: 'nisîmis', gloss: 'my younger sibling', relation: 'younger sibling'},
+      {cree: 'nikâwiy', gloss: 'my mother', relation: 'female counterpart'}
     ],
     usage: [
       {cree: 'nôhtâwiy nipâw.', eng: '"My father is sleeping."'},
@@ -149,9 +150,9 @@ const words = {
     meaning: 'Refers to \'my daughter\' or affectionately \'my child\'.',
     category: 'kinship',
     related: [
-      {cree: 'nikosis', gloss: 'my son'},
-      {cree: 'awâsis', gloss: 'child (general)'},
-      {cree: 'nisîmis', gloss: 'my younger sibling'}
+      {cree: 'nikosis', gloss: 'my son', relation: 'male counterpart'},
+      {cree: 'awâsis', gloss: 'child (general)', relation: 'general term'},
+      {cree: 'nisîmis', gloss: 'my younger sibling', relation: 'sibling'}
     ],
     usage: [
       {cree: 'nitânis mêtawêw.', eng: '"My daughter is playing."'},
@@ -167,9 +168,9 @@ const words = {
     meaning: 'To be happy, glad, or pleased about something.',
     category: 'emotions',
     related: [
-      {cree: 'kîsêwâtisiw', gloss: 'he/she is kind'},
-      {cree: 'sêkisiw', gloss: 'he/she is afraid'},
-      {cree: 'têpêyihtam', gloss: 'he/she is content'}
+      {cree: 'kîsêwâtisiw', gloss: 'he/she is kind', relation: 'related emotion'},
+      {cree: 'sêkisiw', gloss: 'he/she is afraid', relation: 'contrasting emotion'},
+      {cree: 'têpêyihtam', gloss: 'he/she is content', relation: 'related emotion'}
     ],
     usage: [
       {cree: 'miyawâtam mâka!', eng: '"He is so happy!"'},
@@ -184,9 +185,9 @@ const words = {
     meaning: 'To cry or be in a state of sadness.',
     category: 'emotions',
     related: [
-      {cree: 'sêkisiw', gloss: 'he/she is afraid'},
-      {cree: 'kisiwâsiw', gloss: 'he/she is angry'},
-      {cree: 'miyawâtam', gloss: 'he/she is happy'}
+      {cree: 'sêkisiw', gloss: 'he/she is afraid', relation: 'related emotion'},
+      {cree: 'kisiwâsiw', gloss: 'he/she is angry', relation: 'related emotion'},
+      {cree: 'miyawâtam', gloss: 'he/she is happy', relation: 'opposite'}
     ],
     usage: [
       {cree: 'mâtow awâsis.', eng: '"The child is crying."'},
@@ -201,9 +202,9 @@ const words = {
     meaning: 'To be tired, fatigued, or weary.',
     category: 'emotions',
     related: [
-      {cree: 'nipâw', gloss: 'he/she sleeps'},
-      {cree: 'têpêyihtam', gloss: 'he/she is content'},
-      {cree: 'mâtow', gloss: 'he/she cries'}
+      {cree: 'nipâw', gloss: 'he/she sleeps', relation: 'natural result'},
+      {cree: 'têpêyihtam', gloss: 'he/she is content', relation: 'related state'},
+      {cree: 'mâtow', gloss: 'he/she cries', relation: 'related emotion'}
     ],
     usage: [
       {cree: 'kîwêhtakosiw.', eng: '"He is tired."'},
@@ -218,9 +219,9 @@ const words = {
     meaning: 'To love or care deeply for another person.',
     category: 'emotions',
     related: [
-      {cree: 'kîsêwâtisiw', gloss: 'he/she is kind'},
-      {cree: 'wîcihêw', gloss: 'he/she helps'},
-      {cree: 'miyawâtam', gloss: 'he/she is happy'}
+      {cree: 'kîsêwâtisiw', gloss: 'he/she is kind', relation: 'synonym'},
+      {cree: 'wîcihêw', gloss: 'he/she helps', relation: 'kind action'},
+      {cree: 'miyawâtam', gloss: 'he/she is happy', relation: 'related emotion'}
     ],
     usage: [
       {cree: 'sâkihêw otôtêma.', eng: '"He loves his friend."'},
@@ -236,9 +237,9 @@ const words = {
     meaning: 'To walk / move on foot',
     category: 'nature',
     related: [
-      {cree: 'pimipayiw', gloss: 'run'},
-      {cree: 'pimohtêhowin', gloss: 'travel'},
-      {cree: 'papâmohtêw', gloss: 'wander'}
+      {cree: 'pimipayiw', gloss: 'run', relation: 'faster movement'},
+      {cree: 'pimohtêhowin', gloss: 'travel', relation: 'noun form'},
+      {cree: 'papâmohtêw', gloss: 'wander', relation: 'extended form'}
     ],
     usage: [
       {cree: 'pimohtêw, astam!', eng: '"Walk here!"'},
@@ -253,8 +254,9 @@ const words = {
     meaning: 'To walk (second person singular imperative).',
     category: 'nature',
     related: [
-      {cree: 'pimohtêw', gloss: 'he/she walks'},
-      {cree: 'pimipayiw', gloss: 'run'}, {cree: 'papâmohtêw', gloss: 'wander'}
+      {cree: 'pimohtêw', gloss: 'he/she walks', relation: 'third-person form'},
+      {cree: 'pimipayiw', gloss: 'run', relation: 'faster movement'},
+      {cree: 'papâmohtêw', gloss: 'wander', relation: 'extended form'}
     ],
     usage: [
       {cree: 'pimohtê, astam!', eng: '"Walk here!"'},
@@ -269,8 +271,9 @@ const words = {
     meaning: 'To walk around aimlessly; to wander about.',
     category: 'nature',
     related: [
-      {cree: 'pimohtêw', gloss: 'walk'}, {cree: 'pimipayiw', gloss: 'run'},
-      {cree: 'pimohtêhowin', gloss: 'travel'}
+      {cree: 'pimohtêw', gloss: 'walk', relation: 'simpler form'},
+      {cree: 'pimipayiw', gloss: 'run', relation: 'faster movement'},
+      {cree: 'pimohtêhowin', gloss: 'travel', relation: 'noun form'}
     ],
     usage: [
       {cree: 'papâmohtêw êkwa.', eng: '"He walks around."'},
@@ -285,9 +288,9 @@ const words = {
     meaning: 'Water; a fundamental element in Cree life and land.',
     category: 'nature',
     related: [
-      {cree: 'sîpiy', gloss: 'river'},
-      {cree: 'misâskwatômina', gloss: 'saskatoon berries'},
-      {cree: 'askiy', gloss: 'earth / land'}
+      {cree: 'sîpiy', gloss: 'river', relation: 'body of water'},
+      {cree: 'misâskwatômina', gloss: 'saskatoon berries', relation: 'from the land'},
+      {cree: 'askiy', gloss: 'earth / land', relation: 'connected element'}
     ],
     usage: [
       {cree: 'nipiy mînikwêw.', eng: '"He is drinking water."'},
@@ -303,8 +306,9 @@ const words = {
         'The earth, land, or world; holds deep spiritual and cultural significance.',
     category: 'nature',
     related: [
-      {cree: 'nipiy', gloss: 'water'}, {cree: 'sîpiy', gloss: 'river'},
-      {cree: 'miskanâw', gloss: 'path / trail'}
+      {cree: 'nipiy', gloss: 'water', relation: 'connected element'},
+      {cree: 'sîpiy', gloss: 'river', relation: 'body of water'},
+      {cree: 'miskanâw', gloss: 'path / trail', relation: 'feature of land'}
     ],
     usage: [
       {cree: 'askiy kihcêyihtam.', eng: '"She respects the land."'},
@@ -320,9 +324,9 @@ const words = {
         'The sun, moon, or a month of time — all expressed by the same word.',
     category: 'nature',
     related: [
-      {cree: 'tipiskâw', gloss: 'it is night'},
-      {cree: 'kîsikâw', gloss: 'it is day / the sky'},
-      {cree: 'askiy', gloss: 'earth / land'}
+      {cree: 'tipiskâw', gloss: 'it is night', relation: 'opposite time'},
+      {cree: 'kîsikâw', gloss: 'it is day / the sky', relation: 'daytime'},
+      {cree: 'askiy', gloss: 'earth / land', relation: 'earth element'}
     ],
     usage: [
       {cree: 'pîsim wâpiw.', eng: '"The sun is shining."'},
@@ -366,8 +370,9 @@ words.ekosi = {
       'A word used to mean \'so\', \'thus\', or sometimes \'okay / that is so\'.',
   category: 'everyday',
   related: [
-    {cree: 'tânisi', gloss: 'hello / how are you'},
-    {cree: 'namôya', gloss: 'no / not so'}, {cree: 'âha', gloss: 'yes'}
+    {cree: 'tânisi', gloss: 'hello / how are you', relation: 'often paired'},
+    {cree: 'namôya', gloss: 'no / not so', relation: 'opposite'},
+    {cree: 'âha', gloss: 'yes', relation: 'opposite'}
   ],
   usage: [
     {cree: 'êkosi.', eng: '"So." / "Thus."'},
@@ -383,8 +388,9 @@ words.namoya = {
   meaning: 'A negative response meaning \'no\' or \'not so\'.',
   category: 'everyday',
   related: [
-    {cree: 'âha', gloss: 'yes'}, {cree: 'êkosi', gloss: 'so / thus'},
-    {cree: 'tânisi', gloss: 'hello / how are you'}
+    {cree: 'âha', gloss: 'yes', relation: 'opposite'},
+    {cree: 'êkosi', gloss: 'so / thus', relation: 'often paired'},
+    {cree: 'tânisi', gloss: 'hello / how are you', relation: 'often paired'}
   ],
   usage: [
     {cree: 'namôya.', eng: '"No."'},
@@ -400,8 +406,9 @@ words.anohc = {
   meaning: 'A time word meaning \'today\'.',
   category: 'everyday',
   related: [
-    {cree: 'wâpahki', gloss: 'tomorrow'}, {cree: 'kîsikâw', gloss: 'day / sky'},
-    {cree: 'tipiskâw', gloss: 'night'}
+    {cree: 'wâpahki', gloss: 'tomorrow', relation: 'next day'},
+    {cree: 'kîsikâw', gloss: 'day / sky', relation: 'time of day'},
+    {cree: 'tipiskâw', gloss: 'night', relation: 'time of day'}
   ],
   usage: [
     {cree: 'anohc nika-itohtên.', eng: '"I will go today."'},
@@ -417,8 +424,9 @@ words.wapahki = {
   meaning: 'A time word meaning \'tomorrow\'.',
   category: 'everyday',
   related: [
-    {cree: 'anohc', gloss: 'today'}, {cree: 'kîsikâw', gloss: 'day / sky'},
-    {cree: 'tipiskâw', gloss: 'night'}
+    {cree: 'anohc', gloss: 'today', relation: 'previous day'},
+    {cree: 'kîsikâw', gloss: 'day / sky', relation: 'time of day'},
+    {cree: 'tipiskâw', gloss: 'night', relation: 'time of day'}
   ],
   usage: [
     {cree: 'wâpahki nika-itohtên.', eng: '"I will go tomorrow."'},
@@ -547,6 +555,8 @@ window.onload = function() {
   w.related.forEach(function(rel, i) {
     document.getElementById('child' + i).innerText = rel.cree;
     document.getElementById('childGloss' + i).innerText = rel.gloss;
+    var relLabel = document.getElementById('childRelation' + i);
+    if (relLabel) relLabel.innerText = rel.relation || '';
   });
 
   w.usage.forEach(function(ex, i) {
