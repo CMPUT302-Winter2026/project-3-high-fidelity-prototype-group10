@@ -158,7 +158,7 @@
   }
 
   function handleSearch() {
-    const input = document.getElementById("searchInput").value.toLowerCase();
+    const input = normalize(document.getElementById("searchInput").value);
     const resultsDiv = document.getElementById("results");
     resultsDiv.innerHTML = "";
     if (!input) {
@@ -167,9 +167,10 @@
     }
     Object.keys(words).forEach(key => {
       const w = words[key];
-      const matches = key.includes(input)
-        || w.title.toLowerCase().includes(input)
-        || w.sub.toLowerCase().includes(input);
+      const matches = normalize(key).includes(input)
+        || normalize(w.title).includes(input)
+        || normalize(w.sub).includes(input)
+        || normalize(w.meaning).includes(input);
       if (matches && (!cat || w.category === cat)) {
         resultsDiv.appendChild(makeItem(key));
       }
