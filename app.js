@@ -336,12 +336,12 @@ const words = {
 const everydayCards = [
   {
     id: 'start',
-    title: 'Start here',
+    title: 'Greetings',
     lines: ['tânisi - Hello', 'êkosi - So, Thus', 'namôya - No, Not so']
   },
   {
     id: 'explore',
-    title: 'More to explore',
+    title: 'Daily Conversations',
     lines: [
       'tânisi kikosi - How is your son?', 'ninohtê mitson - I want to eat',
       'kîsta - You too'
@@ -349,7 +349,7 @@ const everydayCards = [
   },
   {
     id: 'challenge',
-    title: 'Challenge yourself',
+    title: 'Expressions',
     lines: [
       'Wâskahikan kayâs-âyiwan - The house is old',
       'Kithwâm kî wâpamitin - See you again'
