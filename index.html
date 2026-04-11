@@ -75,14 +75,17 @@
     console.log("Login attempt for role:", role);
 
     // 2. Force the update to localStorage
-    localStorage.setItem('', role.toLowerCase());
+    localStorage.setItem('userRole', role.toLowerCase());
 
-    // 3. Update 'addMode' based on the role 
+    // 3. Update 'addMode' based on the role
     // Educators get 'true', Students get 'false'
     if (role.toLowerCase() === 'educator') {
         localStorage.setItem('addMode', 'true');
     } else {
         localStorage.setItem('addMode', 'false');
+        // Clear any lesson draft left over from a previous educator session
+        localStorage.removeItem('currentLessonWords');
+        localStorage.removeItem('currentLessonTitle');
     }
 
     // 4. UI Feedback
