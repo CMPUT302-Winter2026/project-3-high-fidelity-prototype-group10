@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Everyday Phrases</title>
+  <title>Word List</title>
   <link rel="stylesheet" href="styles.css">
   <style>
     .page-top {
@@ -108,7 +108,7 @@
 
   <div class="page-top">
     <button class="back-btn" onclick="history.back()" aria-label="Go back">&#8592;</button>
-    <div class="page-title">Everyday Phrases</div>
+    <div class="page-title" id="pageTitle"></div>
   </div>
 
   <div id="wordList"></div>
@@ -117,58 +117,61 @@
 
 <script src="app.js"></script>
 <script>
-  const everydayWords = [
-    { key: "hello",   title: "tânisi",  sub: "Hello / how are you" },
-    { key: "ekosi",   title: "êkosi",   sub: "So, Thus" },
-    { key: "namoya",  title: "namôya",  sub: "No, Not so" },
-    { key: "anohc",   title: "anohc",   sub: "Today" },
-    { key: "wapahki", title: "wâpahki", sub: "Tomorrow" }
-  ];
+  const params = new URLSearchParams(window.location.search);
+  const cat = params.get('cat') || 'everyday';
 
-  const wordList = document.getElementById("wordList");
+  const categoryTitles = {
+    everyday: 'Everyday Phrases',
+    kinship:  'Kinship Terms',
+    emotions: 'Emotions & Wellbeing',
+    nature:   'Nature & Land'
+  };
 
-  function openWordFromCategory(item) {
-    if (typeof words !== "undefined" && words[item.key]) {
-      localStorage.setItem("selectedWord", item.key);
-      goTo("definition.html");
-    } else {
-      alert(item.title + " definition is not connected yet.");
-    }
-  }
-  
-//added for checking if the sounds play or not
+  document.getElementById('pageTitle').textContent = categoryTitles[cat] || 'Words';
+
   function playAudio(word) {
-    alert("Prototype audio for: " + word);
+    alert('Prototype audio for: ' + word);
   }
 
-  everydayWords.forEach(function(item) {
-    const row = document.createElement("div");
-    row.className = "word-row";
+  function renderWords() {
+    const wordList = document.getElementById('wordList');
+    wordList.innerHTML = '';
 
-    row.innerHTML =
-      '<div class="word-main">' +
-        '<div class="word-cree">' + item.title + '</div>' +
-        '<div class="word-sub">' + item.sub + '</div>' +
-      '</div>' +
-      '<button class="audio-btn" type="button" aria-label="Play audio">' +
-        '<svg viewBox="0 0 24 24" aria-hidden="true">' +
-          '<path d="M11 5 L6 9 H3 V15 H6 L11 19 Z"></path>' +
-          '<path d="M15 9 Q18 12 15 15"></path>' +
-          '<path d="M17.5 7 Q22 12 17.5 17"></path>' +
-        '</svg>' +
-      '</button>';
+    Object.keys(words).forEach(function(key) {
+      const w = words[key];
+      if (w.category !== cat) return;
 
-    row.querySelector(".word-main").onclick = function() {
-      openWordFromCategory(item);
-    };
+      const row = document.createElement('div');
+      row.className = 'word-row';
 
-    row.querySelector(".audio-btn").onclick = function(e) {
-      e.stopPropagation();
-      playAudio(item.title);
-    };
+      row.innerHTML =
+        '<div class="word-main">' +
+          '<div class="word-cree">' + w.title + '</div>' +
+          '<div class="word-sub">' + w.sub + '</div>' +
+        '</div>' +
+        '<button class="audio-btn" type="button" aria-label="Play audio">' +
+          '<svg viewBox="0 0 24 24" aria-hidden="true">' +
+            '<path d="M11 5 L6 9 H3 V15 H6 L11 19 Z"></path>' +
+            '<path d="M15 9 Q18 12 15 15"></path>' +
+            '<path d="M17.5 7 Q22 12 17.5 17"></path>' +
+          '</svg>' +
+        '</button>';
 
-    wordList.appendChild(row);
-  });
+      row.querySelector('.word-main').onclick = function() {
+        localStorage.setItem('selectedWord', key);
+        goTo('definition.html');
+      };
+
+      row.querySelector('.audio-btn').onclick = function(e) {
+        e.stopPropagation();
+        playAudio(w.title);
+      };
+
+      wordList.appendChild(row);
+    });
+  }
+
+  renderWords();
 </script>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Everyday Phrases</title>
+  <title>Nature &amp; Land</title>
   <link rel="stylesheet" href="styles.css">
   <style>
     .page-top {
@@ -12,7 +12,6 @@
       gap: 12px;
       margin-bottom: 18px;
     }
-
     .back-btn {
       background: none;
       border: none;
@@ -22,13 +21,11 @@
       padding: 0;
       line-height: 1;
     }
-
     .page-title {
       font-size: 1.6rem;
       font-weight: 700;
       color: #2c1a0e;
     }
-
     .phrase-card {
       background: #ddd4cb;
       border-radius: 14px;
@@ -37,22 +34,14 @@
       cursor: pointer;
       transition: background 0.18s, transform 0.1s;
     }
-
-    .phrase-card:hover {
-      background: #d3c9bf;
-    }
-
-    .phrase-card:active {
-      transform: scale(0.98);
-    }
-
+    .phrase-card:hover { background: #d3c9bf; }
+    .phrase-card:active { transform: scale(0.98); }
     .phrase-card-title {
       font-size: 1rem;
       font-weight: 700;
       margin-bottom: 10px;
       color: #2c1a0e;
     }
-
     .phrase-card-text {
       font-size: 0.95rem;
       color: #4b3a2d;
@@ -81,40 +70,41 @@
 
   <div class="page-top">
     <button class="back-btn" onclick="history.back()" aria-label="Go back">&#8592;</button>
-    <div class="page-title">Everyday Phrases</div>
+    <div class="page-title">Nature &amp; Land</div>
   </div>
 
   <div class="search-input-wrap">
     <span class="search-icon">&#128269;</span>
-    <input id="searchInput" placeholder="Search everyday words..." oninput="handleSearch()">
+    <input id="searchInput" placeholder="Search nature words..." oninput="handleSearch()">
   </div>
 
   <div id="topicCards">
-  <div class="phrase-card" onclick="goTo('everyday-words.html?cat=everyday')">
-    <div class="phrase-card-title">Greetings</div>
-    <div class="phrase-card-text">
-      tânisi - Hello<br>
-      êkosi - So, Thus<br>
-      namôya - No, Not so
+    <div class="phrase-card" onclick="goTo('everyday-words.html?cat=nature')">
+      <div class="phrase-card-title">The Land</div>
+      <div class="phrase-card-text">
+        askiy - Earth / Land / World<br>
+        nipiy - Water<br>
+        sîpiy - River
+      </div>
     </div>
-  </div>
 
-  <div class="phrase-card" onclick="goTo('search.html?cat=everyday')">
-    <div class="phrase-card-title">Daily Conversations</div>
-    <div class="phrase-card-text">
-      tânisi kikosi - How is your son?<br>
-      ninohtê mîna - I want to eat<br>
-      kîsta - You too
+    <div class="phrase-card" onclick="goTo('everyday-words.html?cat=nature')">
+      <div class="phrase-card-title">Sky &amp; Time</div>
+      <div class="phrase-card-text">
+        pîsim - Sun / Moon / Month<br>
+        kîsikâw - It is day / The sky<br>
+        tipiskâw - It is night
+      </div>
     </div>
-  </div>
 
-  <div class="phrase-card" onclick="goTo('search.html?cat=everyday')">
-    <div class="phrase-card-title">Expressions</div>
-    <div class="phrase-card-text">
-      Wâskahikan kayâs-âyiwan - The house is old<br>
-      Kithwâm kî wâpamitin - See you again
+    <div class="phrase-card" onclick="goTo('everyday-words.html?cat=nature')">
+      <div class="phrase-card-title">Movement on the Land</div>
+      <div class="phrase-card-text">
+        pimohtêw - He/she walks<br>
+        pimipayiw - Run<br>
+        papâmohtêw - Walks around / Wanders
+      </div>
     </div>
-  </div>
   </div>
 
   <div id="searchResults" style="display:none;"></div>
@@ -141,7 +131,7 @@
 
     Object.keys(words).forEach(function(key) {
       const w = words[key];
-      if (w.category !== 'everyday') return;
+      if (w.category !== 'nature') return;
       const matches = normalize(key).includes(input)
         || normalize(w.title).includes(input)
         || normalize(w.sub).includes(input)
